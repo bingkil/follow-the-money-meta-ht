@@ -10,7 +10,20 @@ from ftm.db import connect
 def seed(path: str | None = None, seed_value: int = 42):
     rng = random.Random(seed_value)
     with connect(path) as db:
-        for table in ("transactions", "relationships", "accounts", "customers", "fixture_metadata"):
+        for table in (
+            "case_notes",
+            "cases",
+            "alerts",
+            "detection_runs",
+            "location_events",
+            "documents",
+            "locations",
+            "transactions",
+            "relationships",
+            "accounts",
+            "customers",
+            "fixture_metadata",
+        ):
             db.execute(f"DELETE FROM {table}")
         people = [
             ("staffing", "Meridian Workforce Services", "business", "Staffing"),
@@ -47,7 +60,7 @@ def seed(path: str | None = None, seed_value: int = 42):
             for i in range(1, 9):
                 worker = f"worker{i}-a"
                 add("staffing-a", worker, 180000, month, 25, "Payroll")
-                amount = rng.randrange(55000, 85000, 1000)
+                amount = 60000 if i in (1, 4, 7) else rng.randrange(55000, 85000, 1000)
                 add(worker, collectors[(i - 1) % 3], amount, month, 26, "Transfer")
                 add(
                     worker,
@@ -61,6 +74,38 @@ def seed(path: str | None = None, seed_value: int = 42):
                 received = sum(t[3] for t in txs if t[2] == account and t[4][5:7] == f"{month:02}")
                 add(account, "destination-a", received * 9 // 10, month, 27, "Transfer")
         db.executemany("INSERT INTO transactions VALUES (?,?,?,?,?,?)", txs)
+        db.execute(
+            "INSERT INTO locations VALUES (?,?,?,?,?)",
+            ("atm-central", "Central Square ATM", "ATM", 48.720, 21.258),
+        )
+        for month in range(5, 11):
+            for i in range(1, 9):
+                timestamp = datetime(2026, month, 26, 9, i * 3, tzinfo=timezone.utc).isoformat()
+                db.execute(
+                    "INSERT INTO location_events VALUES (?,?,?,?,?)",
+                    (
+                        f"event-{month}-{i}",
+                        f"worker{i}-a",
+                        "atm-central",
+                        timestamp,
+                        "balance enquiry",
+                    ),
+                )
+        for i in (1, 4, 7):
+            db.execute(
+                "INSERT INTO documents VALUES (?,?,?,?,?,?)",
+                (
+                    f"agreement-{i}",
+                    f"worker{i}",
+                    "Shared accommodation collection agreement",
+                    "Monthly accommodation contribution EUR 600. Alex Mercer collects payments "
+                    "for onward payment to Meridian Accommodation Services. "
+                    "Agreement explains the stated charge; it does not establish consent or "
+                    "conditions of employment.",
+                    "2026-05-01",
+                    "Synthetic customer-file agreement",
+                ),
+            )
         db.execute("INSERT INTO fixture_metadata VALUES ('seed', ?)", (str(seed_value),))
         return {"customers": len(people), "accounts": len(accounts), "transactions": len(txs)}
 

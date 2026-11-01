@@ -19,3 +19,17 @@ Next increment: complete the fixture variants and location/document evidence, im
 - TestClient emits an upstream httpx deprecation warning; tests currently pass.
 - Browser visual QA and live Meta connectivity are pending. No credential has been requested or used.
 - Hosting options documented in hosting.md; no infrastructure deployed.
+
+## Monitoring increment — 1 November 2026
+
+Implemented: additive schema v2, versioned rapid-movement rule, parameter-specific deduplication, persisted detection runs and trigger snapshots, reproducible score breakdown, queue filtering, alert inspection, assignment, case creation and persistent notes. Same monitoring service exposed through API and CLI.
+
+Fixture: three accommodation agreements cover EUR 600 monthly contributions for workers 1, 4 and 7. Other transfers remain unexplained by these agreements. ATM balance-enquiry events supply location evidence without claiming cash withdrawal or identifying who operated the card.
+
+Default synthetic parameters: 7-day window, at least 3 distinct sender owners and EUR 1,000 incoming, at least 80% aggregate onward turnover within 48 hours of an incoming event. Internal same-owner transfers excluded. Each qualifying outflow counted once. No exact-funds attribution or historical anomaly score is claimed. Priority is a documented provisional rule-only calculation. These thresholds are implementation choices.
+
+Checks: 5 backend tests pass; Ruff and frontend production build pass. Browser execution initially blocked by missing Playwright Chromium binary; final browser result recorded below if available.
+
+Remaining: automated scheduling, case audit/disposition, fixture variants and unknown external identities, full historical/network tools, live Meta agents, graph/timeline/map. Stage 2 is partial; this is an operational monitoring slice, not the complete FTM application.
+
+Browser QA remains unverified: Chromium installation returned truncated/invalid archives. No browser-interaction pass is claimed.

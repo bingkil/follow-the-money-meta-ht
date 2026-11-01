@@ -4,7 +4,7 @@ Evidence-grounded financial investigation for the Meta hackathon. All fixture da
 
 ## Current delivery
 
-Foundation API, SQLite schema, seeded six-month collection-network fixture and React source-data screen. Alert detection and AI investigation are not yet implemented. No live Meta call has been verified.
+FastAPI/SQLite backend, seeded six-month collection-network fixture, rule-generated alert queue, trigger inspection and basic persistent cases/notes. AI investigation is upcoming. No live Meta call has been verified.
 
 ## Prerequisites
 
@@ -54,3 +54,13 @@ Set `META_API_KEY` in `.env`, then run `uv run --env-file .env python scripts/me
 - [Product design](docs/design.md)
 - [Implementation stages](docs/implementation.md)
 - [Development status](docs/status.md)
+
+## Monitoring
+
+After seeding, use Run detection in the UI with the default exclusive cutoff 2026-11-01 UTC. The default 7-day rule produces two synthetic alerts. Re-running retains existing alerts. The same service can be called from the CLI:
+
+```sh
+PYTHONPATH=services/api uv run --env-file .env python -m ftm.monitoring --cutoff 2026-11-01T00:00:00Z
+```
+
+Scheduling is not yet configured. The score is a provisional uncalibrated rule priority, not a probability. Follow The Money is visibly disabled until agent integration.
