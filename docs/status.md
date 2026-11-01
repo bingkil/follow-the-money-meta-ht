@@ -33,3 +33,7 @@ Checks: 5 backend tests pass; Ruff and frontend production build pass. Browser e
 Remaining: automated scheduling, case audit/disposition, fixture variants and unknown external identities, full historical/network tools, live Meta agents, graph/timeline/map. Stage 2 is partial; this is an operational monitoring slice, not the complete FTM application.
 
 Browser QA remains unverified: Chromium installation returned truncated/invalid archives. No browser-interaction pass is claimed.
+
+## Windows developer restart
+
+Added restart.ps1 and scripts/dev-server.ps1: checkout-scoped process cleanup, locked installs, separate server windows, next-free ports, dynamic frontend proxy and readiness checks. No data reset. Static review completed; Windows PowerShell execution is unverified in this Linux workspace.

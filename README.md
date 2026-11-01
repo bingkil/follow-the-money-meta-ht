@@ -64,3 +64,19 @@ PYTHONPATH=services/api uv run --env-file .env python -m ftm.monitoring --cutoff
 ```
 
 Scheduling is not yet configured. The score is a provisional uncalibrated rule priority, not a probability. Follow The Money is visibly disabled until agent integration.
+
+## Windows restart
+
+From PowerShell in the repository root:
+
+```powershell
+.\restart.ps1 -OpenBrowser
+```
+
+If the local execution policy blocks it, run this single invocation:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\restart.ps1 -OpenBrowser
+```
+
+The script stops recognised FTM server process trees belonging to this checkout, starts backend/frontend in separate windows, installs locked dependencies, and waits for API, frontend and proxy readiness. It leaves unrelated servers running and selects the next free ports starting at 8000 (backend) and 5173 (frontend). The frontend proxy uses the selected backend port. Ports are checked immediately before launch; if another process takes one during startup, retry the script. It can be invoked from any directory by its full path. Use `-TimeoutSeconds 180` for a slow first dependency install. It preserves the database and does not seed/reset data. Windows, uv and npm are required.

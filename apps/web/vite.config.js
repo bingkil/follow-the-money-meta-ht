@@ -1,2 +1,6 @@
 import { defineConfig } from 'vite';
-export default defineConfig({server:{proxy:{'/api':'http://127.0.0.1:8000'}}});
+export default defineConfig({
+  server: {
+    proxy: { '/api': process.env.FTM_API_TARGET || 'http://127.0.0.1:8000' },
+  },
+});
