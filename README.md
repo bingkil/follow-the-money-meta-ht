@@ -88,3 +88,11 @@ Inspect an alert, then select **Collect evidence** below its details. The determ
 This is deterministic investigation support; Meta agents are not integrated yet. A two-hop view is deliberately incomplete: an intermediate account may be visible before all of its senders are. The API accepts up to three hops. Group totals cover displayed accounts/edges, and transfer paths do not attribute specific funds. Existing databases upgrade additively to schema v3 without resetting cases. New fixture documents/events require explicitly reseeding if your database predates them.
 
 The evidence workspace uses React Flow: drag nodes, pan/zoom, use fit controls, select a node or transfer edge to filter source records, and toggle legal-owner grouping. Ownership edges are dashed and remain distinct from transfers. Switching view resets the layout; moving nodes does not change evidence. Web model checks: `cd apps/web` then `npm test`.
+
+## Windows stop
+
+```powershell
+.\stop.ps1
+```
+
+Stops recognised FTM server process trees belonging to this checkout, across whichever ports were selected. Safe to repeat when no servers are running; it preserves data and leaves unrelated applications running. `restart.ps1` uses the same cleanup. If execution policy blocks it, use `powershell -ExecutionPolicy Bypass -File .\stop.ps1`.

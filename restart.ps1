@@ -17,27 +17,8 @@ foreach ($command in @('uv', 'npm.cmd')) {
     }
 }
 
-# Match this checkout's absolute path as well as a known server signature.
-# Never kill every python.exe/node.exe process or an arbitrary port owner.
-$servers = @(Get-CimInstance Win32_Process | Where-Object {
-    $text = [string]$_.CommandLine
-    $executable = [string]$_.ExecutablePath
-    $belongsHere = $text.IndexOf($projectRoot, [StringComparison]::OrdinalIgnoreCase) -ge 0 -or
-        $executable.StartsWith($projectRoot + '\', [StringComparison]::OrdinalIgnoreCase)
-    $knownServer = $text -match 'dev-server\.ps1|uvicorn.+ftm\.api:app|[\\/]vite[\\/].*vite\.js'
-    $belongsHere -and $knownServer -and $_.ProcessId -ne $PID
-})
-foreach ($server in $servers) {
-    # Another matched parent's process tree may already have removed this process.
-    $current = Get-CimInstance Win32_Process -Filter "ProcessId = $($server.ProcessId)"
-    if ($current -and $current.CreationDate -eq $server.CreationDate) {
-        Write-Host "Stopping FTM process tree $($server.ProcessId)..."
-        & taskkill.exe /PID $server.ProcessId /T /F 2>&1 | Out-Host
-        if ($LASTEXITCODE -ne 0 -and (Get-Process -Id $server.ProcessId -ErrorAction SilentlyContinue)) {
-            throw "Could not stop FTM process $($server.ProcessId)."
-        }
-    }
-}
+# Share cleanup with the standalone stop command.
+& (Join-Path $projectRoot 'stop.ps1')
 
 # Ask the OS whether a port can be bound. Leave unrelated listeners running.
 function Find-FreePort([int]$StartPort, [int]$ExcludedPort = 0) {

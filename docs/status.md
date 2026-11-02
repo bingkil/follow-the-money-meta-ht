@@ -75,3 +75,7 @@ Replaced the main workspace's custom SVG with @xyflow/react. Added draggable nod
 Layout is deterministic by transfer topology (cyclic nodes use a final column). Dragged positions persist during selection changes within a view; switching view or loading a new snapshot resets layout. Expansion remains bounded by the backend's collected snapshot; no new client-side discovery is claimed.
 
 Checks: 2 graph-model tests, 8 backend tests and TypeScript/Vite build pass. Graph tests cover aggregation, internal transfers, legal identity, unchanged source evidence and deterministic positions. Browser drag/selection/visual verification for this integration remains pending; previous spike results do not substitute for production-browser verification.
+
+## Standalone Windows stop — 2 November 2026
+
+Added stop.ps1 and reused it from restart.ps1. Cleanup is scoped to checkout paths and known FTM server signatures, checks process creation time before terminating a tree, and works independently of selected ports. Repeated calls with no servers return a friendly message. Reviewed statically; Windows execution remains to be verified by Chris. No backend or frontend application behaviour changed.
