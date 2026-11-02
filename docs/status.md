@@ -34,6 +34,26 @@ Remaining: automated scheduling, case audit/disposition, fixture variants and un
 
 Browser QA remains unverified: Chromium installation returned truncated/invalid archives. No browser-interaction pass is claimed.
 
+## Stage 0 live Meta verification — 1 November 2026
+
+Live chat completion (scripts/meta_probe.py) and a tool-call round-trip (scripts/meta_tool_probe.py) passed against model muse-spark-1.3: the model requested the tool, received the result and stated the correct sum. tool_choice supports only auto per the official cookbook. On this Windows machine TLS inspection required verifying through the OS trust store (truststore dependency); verification remains enabled.
+
+Stage 0 remaining: browser visual QA of the main app.
+
+## Graph library spike — 1 November 2026
+
+Cytoscape.js 3.34 and vis-network 10.1 were compared side by side at apps/web/spike.html (run `npm run dev` in apps/web and open /spike.html; sources in src/spike). Both render the same synthetic eight-worker, three-collection-account model with fixed positions and physics off.
+
+Observed in Chromium, both libraries: directed edges, dashed ownership edge, edge selection by click, progressive reveal and an Accounts/Entities toggle with 0.00 px position drift after render. Entity aggregation is our own code in model.ts; totals reconcile (EUR 45.00 received and onward) and the EUR 5.00 same-owner internal transfer is excluded from entity edges.
+
+Differences: Cytoscape draws owner groups as real compound boxes around accounts and keeps horizontal, readable edge labels. vis-network has no equivalent data-model grouping (clustering is visual), rotates edge labels, and its edge hit-test took precedence near node arrowheads. vis-network was not tested with its clustering API, and Cytoscape was not tested above 12 nodes. One unexplained grey circle appeared once in a Cytoscape screenshot after a toggle and could not be reproduced; the node list at that point contained no extra element.
+
+React Flow (@xyflow/react 12) was added to the same page. It passed the same checks (0.00 px drift, edge and node selection, group boxes via parentId, reconciled totals). Its nodes are DOM elements, so rich React cards and accessible markup are straightforward; positions and grouping boxes must be supplied by us and group children use parent-relative coordinates. It renders a "React Flow" attribution link by default, and hiding it prints a Pro-subscription warning, so the attribution is left visible. Edge labels were readable but overlapped where several edges converge on one node.
+
+Decision: React Flow chosen for Stage 5 for now (2 November 2026); vis-network is not preferred. No performance test above 12 nodes was run for any library.
+
+Click-to-expand was added to the React Flow panel: clicking a node reveals its neighbours up to 1-3 hops (selector on the page). The expansion in model.ts is a client-side stand-in over synthetic transfers; the real version must call the backend expand_network/trace_funds tools, which enforce time, hop and permission limits. Verified in Chromium: click D at 1 hop reveals C2 and C3 (8 nodes), then C2 reveals W4/W5 (10 nodes); C1 at 3 hops reveals all 12 nodes; totals reconcile and positions do not move. Spike code is exploratory and not part of the production page. Dependencies vis-network and vis-data, and the spike for any rejected library, can be removed when the spike is deleted.
+
 ## Windows developer restart
 
 Added restart.ps1 and scripts/dev-server.ps1: checkout-scoped process cleanup, locked installs, separate server windows, next-free ports, dynamic frontend proxy and readiness checks. No data reset. Static review completed; Windows PowerShell execution is unverified in this Linux workspace.

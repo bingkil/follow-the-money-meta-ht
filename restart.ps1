@@ -64,6 +64,9 @@ $frontendUrl = "http://127.0.0.1:$frontendPort"
 Write-Host "Selected backend port $backendPort and frontend port $frontendPort."
 
 $shell = (Get-Process -Id $PID).Path
+# Server windows use -NoProfile, so hand them the directories of the tools found here.
+$toolDirs = foreach ($command in @('uv', 'npm.cmd')) { Split-Path (Get-Command $command).Source }
+$env:PATH = (($toolDirs | Select-Object -Unique) + $env:PATH) -join ';'
 foreach ($service in @('backend', 'frontend')) {
     # Arguments are passed to PowerShell's -File parser. Windows paths cannot contain quotes.
     $arguments = @('-NoProfile', '-NoExit', '-ExecutionPolicy', 'Bypass', '-File',

@@ -1,9 +1,11 @@
 """Explicit opt-in connectivity probe; never prints credentials."""
 
 import os
+import ssl
 import sys
 
 import httpx
+import truststore
 
 key = os.getenv("META_API_KEY")
 if not key:
@@ -16,6 +18,8 @@ response = httpx.post(
         "messages": [{"role": "user", "content": "Reply with the word ready."}],
     },
     timeout=30,
+    # OS store so corporate TLS-inspection roots are trusted; verification stays on.
+    verify=truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT),
 )
 if response.status_code != 200:
     sys.exit(f"Meta probe failed: HTTP {response.status_code}. Response body omitted.")

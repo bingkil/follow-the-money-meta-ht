@@ -47,7 +47,7 @@ npm run build
 
 ## Meta
 
-Set `META_API_KEY` in `.env`, then run `uv run --env-file .env python scripts/meta_probe.py`. This explicitly makes a real API request. Keys remain server-side. The probe tests connectivity only; the agent/tool round-trip remains pending.
+Set `META_API_KEY` in `.env`, then run `uv run --env-file .env python scripts/meta_probe.py`. This explicitly makes a real API request. Keys remain server-side. The probe tests connectivity only. `scripts/meta_tool_probe.py` runs the same way and verifies one tool-call round-trip.
 
 ## Design
 

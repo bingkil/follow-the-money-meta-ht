@@ -2,7 +2,7 @@
 ## v0.1 · 1 November 2026
 
 **Owner:** Chris Prakoso  
-**Status:** Proposed development plan; implementation has not started.  
+**Status:** Development plan; Stage 0 is largely complete and Stages 1–2 are partial (see status.md). Stages 3–7 have not started. Live Meta integration is unverified.  
 **Baseline:** Follow The Money Product and MVP Design v0.2 (the existing filename remains Follow_The_Money_Design_v0.1.md).  
 **Goal:** Deliver a functioning, visually compelling investigation from a generated AML alert, using Meta AI at runtime and traceable deterministic evidence.
 
@@ -332,11 +332,11 @@ Keep code and documentation in sync. Mark proposed choices as selected only afte
 
 ## 16. Immediate next actions
 
-1. Establish the repository location.
-2. Verify Meta access and tool-calling behaviour.
-3. Define the fixture entities and exact observable relationships.
-4. Implement Stage 0 and Stage 1.
-5. Review the first generated alert with Chris before broadening the scenario.
+1. Verify Meta access and tool-calling behaviour with a live probe (needs `META_API_KEY`).
+2. Complete Stage 1: fixture variants, location/document evidence and uncertain identities.
+3. Finish Stage 2: scheduling and case audit/disposition.
+4. Begin Stage 3 deterministic tools, reproducing the first alert calculation first.
+5. Review the generated alerts with Chris before broadening the scenario.
 
-No additional handoff is required to start implementation in this workspace.
+No additional handoff is required to continue implementation in this workspace.
 

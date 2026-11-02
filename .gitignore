@@ -10,3 +10,7 @@ dist/
 var/
 *.sqlite*
 *.tsbuildinfo
+
+# Local graph-library spike
+apps/web/spike.html
+apps/web/src/spike/
