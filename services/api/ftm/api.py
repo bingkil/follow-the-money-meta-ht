@@ -8,6 +8,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from ftm.db import connect
+from ftm.investigation import collect_evidence
 from ftm.monitoring import DetectionRequest, run_detection
 
 app = FastAPI(title="Follow The Money", version="0.1.0")
@@ -147,5 +148,32 @@ def notes(case_id: str):
             dict(r)
             for r in db.execute(
                 "SELECT * FROM case_notes WHERE case_id=? ORDER BY created_at,id", (case_id,)
+            )
+        ]
+
+
+class EvidenceRequest(BaseModel):
+    max_hops: int = Field(default=2, ge=1, le=3)
+
+
+@app.post("/api/alerts/{alert_id}/evidence")
+def gather_evidence(alert_id: str, request: EvidenceRequest):
+    try:
+        return collect_evidence(alert_id, max_hops=request.max_hops)
+    except LookupError:
+        raise HTTPException(404, "Alert not found") from None
+
+
+@app.get("/api/alerts/{alert_id}/evidence")
+def evidence_history(alert_id: str):
+    with connect() as db:
+        if not db.execute("SELECT id FROM alerts WHERE id=?", (alert_id,)).fetchone():
+            raise HTTPException(404, "Alert not found")
+        return [
+            json.loads(r["snapshot"])
+            for r in db.execute(
+                "SELECT snapshot FROM evidence_runs WHERE alert_id=? "
+                "ORDER BY created_at DESC LIMIT 10",
+                (alert_id,),
             )
         ]

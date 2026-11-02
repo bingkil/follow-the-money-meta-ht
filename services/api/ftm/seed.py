@@ -11,6 +11,7 @@ def seed(path: str | None = None, seed_value: int = 42):
     rng = random.Random(seed_value)
     with connect(path) as db:
         for table in (
+            "evidence_runs",
             "case_notes",
             "cases",
             "alerts",

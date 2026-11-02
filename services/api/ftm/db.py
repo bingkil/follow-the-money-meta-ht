@@ -9,6 +9,7 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS schema_version(version INTEGER PRIMARY KEY);
 INSERT OR IGNORE INTO schema_version VALUES (1);
 INSERT OR IGNORE INTO schema_version VALUES (2);
+INSERT OR IGNORE INTO schema_version VALUES (3);
 CREATE TABLE IF NOT EXISTS customers(
  id TEXT PRIMARY KEY, name TEXT NOT NULL, kind TEXT NOT NULL, occupation TEXT NOT NULL
 );
@@ -48,6 +49,10 @@ CREATE TABLE IF NOT EXISTS alerts(
  run_id TEXT NOT NULL REFERENCES detection_runs(id), rule_version TEXT NOT NULL,
  window_start TEXT NOT NULL, cutoff TEXT NOT NULL, score INTEGER NOT NULL,
  evidence TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'New', owner TEXT NOT NULL DEFAULT ''
+);
+CREATE TABLE IF NOT EXISTS evidence_runs(
+ id TEXT PRIMARY KEY, alert_id TEXT NOT NULL REFERENCES alerts(id),
+ created_at TEXT NOT NULL, snapshot TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS cases(
  id TEXT PRIMARY KEY, alert_id TEXT NOT NULL UNIQUE REFERENCES alerts(id),

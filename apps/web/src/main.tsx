@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './style.css';
+import {EvidenceExplorer} from './EvidenceExplorer';
 
 type Alert = {id:string;account_id:string;customer:string;score:number;status:string;owner:string;cutoff:string;rule_version:string};
 type Transaction = {id:string;source_account:string;target_account:string;amount_cents:number;timestamp:string};
@@ -50,6 +51,7 @@ function App(){
  <div className="toolbar"><label>Owner<input value={detail.owner} maxLength={100} onChange={e=>setDetail({...detail,owner:e.target.value})}/></label><label>Status<select value={detail.status} onChange={e=>setDetail({...detail,status:e.target.value})}>{['New','Assigned','Investigating','Resolved'].map(s=><option key={s}>{s}</option>)}</select></label><button disabled={busy} onClick={assign}>Save assignment</button><button disabled={busy||!!detail.case} onClick={openCase}>{detail.case?'Case open':'Open case'}</button><button disabled title="Agent integration is the next development stage">Follow The Money · upcoming</button></div>
  {detail.case&&<><h3>Case notes</h3>{notes.map(n=><p className="note" key={n.id}>{n.content}</p>)}<textarea aria-label="Case note" maxLength={10000} value={note} onChange={e=>setNote(e.target.value)} placeholder="Record an investigation note"/><button disabled={busy||!note.trim()} onClick={saveNote}>Save note</button></>}
  </section>}
+ {detail&&<EvidenceExplorer key={detail.id} alertId={detail.id}/>}
  <footer>Local demo · All records fictional. Detection identifies activity for review; it does not establish trafficking or mule activity.</footer></main>;
 }
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);

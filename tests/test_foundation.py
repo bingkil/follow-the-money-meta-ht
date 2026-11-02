@@ -34,7 +34,7 @@ def test_api_reads_persistent_fixture(tmp_path, monkeypatch):
     client = TestClient(app)
     health = client.get("/api/health").json()
     assert health["status"] == "ok"
-    assert health["database_version"] == 2
+    assert health["database_version"] == 3
     assert health["meta_configured"] is False
     assert health["meta_verified"] is False
     assert client.get("/api/overview").json()["accounts"] == []

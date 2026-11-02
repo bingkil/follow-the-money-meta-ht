@@ -37,3 +37,13 @@ Browser QA remains unverified: Chromium installation returned truncated/invalid 
 ## Windows developer restart
 
 Added restart.ps1 and scripts/dev-server.ps1: checkout-scoped process cleanup, locked installs, separate server windows, next-free ports, dynamic frontend proxy and readiness checks. No data reset. Static review completed; Windows PowerShell execution is unverified in this Linux workspace.
+
+## Deterministic evidence increment — 1 November 2026
+
+Chris verified the application runs on Windows. Added eight evidence services, immutable saved evidence runs (schema v3), bounded graph exploration and legal-owner grouping UI. Tools expose source identifiers, time windows and coverage limits. Account grouping preserves separate corporate identity; internal transfers remain separate from external totals. Source comparisons are period totals, not a calibrated anomaly model.
+
+Two-hop exploration from collector-a reaches six workers; it intentionally does not expose the two workers beyond the other collection account at three hops. Node and transaction limits are explicit. ATM evidence is balance-enquiry location, not cash withdrawal.
+
+Validation: backend tests cover grouping, source documents, time cutoff, forward path ordering, snapshots, API bounds and dependent-data reset. Frontend production build passes. Browser visual QA remains pending in this environment. Live Meta requests remain pending.
+
+Next: runtime agent adapter/orchestration and report synthesis using these tools, plus graph interaction refinement. Scheduling, audit/disposition and fixture variants remain open.

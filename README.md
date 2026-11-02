@@ -80,3 +80,9 @@ powershell -ExecutionPolicy Bypass -File .\restart.ps1 -OpenBrowser
 ```
 
 The script stops recognised FTM server process trees belonging to this checkout, starts backend/frontend in separate windows, installs locked dependencies, and waits for API, frontend and proxy readiness. It leaves unrelated servers running and selects the next free ports starting at 8000 (backend) and 5173 (frontend). The frontend proxy uses the selected backend port. Ports are checked immediately before launch; if another process takes one during startup, retry the script. It can be invoked from any directory by its full path. Use `-TimeoutSeconds 180` for a slow first dependency install. It preserves the database and does not seed/reset data. Windows, uv and npm are required.
+
+## Evidence workspace
+
+Inspect an alert, then select **Collect evidence** below its details. The deterministic tools retrieve the stored trigger, customer context, 30-day comparisons, a bounded two-hop account network, legal-owner totals, branch/ATM context, supporting documents and forward observed paths. Select graph nodes to filter source transfers; switch to legal-owner grouping to see common ownership. **Load saved evidence** reopens the latest stored snapshot.
+
+This is deterministic investigation support; Meta agents are not integrated yet. A two-hop view is deliberately incomplete: an intermediate account may be visible before all of its senders are. The API accepts up to three hops. Group totals cover displayed accounts/edges, and transfer paths do not attribute specific funds. Existing databases upgrade additively to schema v3 without resetting cases. New fixture documents/events require explicitly reseeding if your database predates them.
