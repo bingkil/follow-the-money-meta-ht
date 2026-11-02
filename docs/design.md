@@ -3,7 +3,7 @@
 
 **Date:** 1 November 2026  
 **Owner:** Chris Prakoso  
-**Status:** Design baseline for the Meta hackathon. Implemented so far: fixture, rapid-movement rule, alert queue and basic cases (see status.md). Agents, graph/timeline/map and reporting are not implemented.  
+**Status:** Design baseline for the Meta hackathon. Implemented so far: fixture, rapid-movement rule, alert queue and basic cases (see status.md). Deterministic evidence collection and a React Flow graph are implemented. Agents, timeline/map and reporting remain pending.
 **Positioning:** AI-assisted financial investigation, grounded in transaction evidence.
 
 ## 1. Purpose

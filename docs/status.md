@@ -67,3 +67,11 @@ Two-hop exploration from collector-a reaches six workers; it intentionally does 
 Validation: backend tests cover grouping, source documents, time cutoff, forward path ordering, snapshots, API bounds and dependent-data reset. Frontend production build passes. Browser visual QA remains pending in this environment. Live Meta requests remain pending.
 
 Next: runtime agent adapter/orchestration and report synthesis using these tools, plus graph interaction refinement. Scheduling, audit/disposition and fixture variants remain open.
+
+## React Flow production workspace — 2 November 2026
+
+Replaced the main workspace's custom SVG with @xyflow/react. Added draggable nodes, pan/zoom, fit controls, minimap, directed transfer labels and transfer-edge selection that filters source records. Account/entity toggle preserves separate legal company identity; company relationships render as dashed edges with source references retained in evidence. Same-owner internal transfers stay in account view and are omitted from aggregated external entity edges. No graph editing changes source evidence. React Flow attribution remains visible.
+
+Layout is deterministic by transfer topology (cyclic nodes use a final column). Dragged positions persist during selection changes within a view; switching view or loading a new snapshot resets layout. Expansion remains bounded by the backend's collected snapshot; no new client-side discovery is claimed.
+
+Checks: 2 graph-model tests, 8 backend tests and TypeScript/Vite build pass. Graph tests cover aggregation, internal transfers, legal identity, unchanged source evidence and deterministic positions. Browser drag/selection/visual verification for this integration remains pending; previous spike results do not substitute for production-browser verification.
